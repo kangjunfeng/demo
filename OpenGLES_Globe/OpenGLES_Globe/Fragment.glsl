@@ -21,7 +21,6 @@ void main(void)
         color = vec4(1.0,1.0,1.0,1.0);
     }
     
-    
     vec4 mask = texture2D(Texture, TextureCoordsFrag);
     gl_FragColor = color;
 }

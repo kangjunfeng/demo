@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0830"
+   LastUpgradeVersion = "0820"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84C185F51ECBDAB600946B05"
+               BlueprintIdentifier = "4BBEFAFB1ECC825500878DBC"
                BuildableName = "OpenGLES_Globe.app"
                BlueprintName = "OpenGLES_Globe"
                ReferencedContainer = "container:OpenGLES_Globe.xcodeproj">
@@ -32,7 +32,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84C1860E1ECBDAB600946B05"
+               BlueprintIdentifier = "4BBEFB141ECC825500878DBC"
                BuildableName = "OpenGLES_GlobeTests.xctest"
                BlueprintName = "OpenGLES_GlobeTests"
                ReferencedContainer = "container:OpenGLES_Globe.xcodeproj">
@@ -42,7 +42,7 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "84C186191ECBDAB600946B05"
+               BlueprintIdentifier = "4BBEFB1F1ECC825500878DBC"
                BuildableName = "OpenGLES_GlobeUITests.xctest"
                BlueprintName = "OpenGLES_GlobeUITests"
                ReferencedContainer = "container:OpenGLES_Globe.xcodeproj">
@@ -52,7 +52,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84C185F51ECBDAB600946B05"
+            BlueprintIdentifier = "4BBEFAFB1ECC825500878DBC"
             BuildableName = "OpenGLES_Globe.app"
             BlueprintName = "OpenGLES_Globe"
             ReferencedContainer = "container:OpenGLES_Globe.xcodeproj">
@@ -75,7 +75,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84C185F51ECBDAB600946B05"
+            BlueprintIdentifier = "4BBEFAFB1ECC825500878DBC"
             BuildableName = "OpenGLES_Globe.app"
             BlueprintName = "OpenGLES_Globe"
             ReferencedContainer = "container:OpenGLES_Globe.xcodeproj">
@@ -94,7 +94,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "84C185F51ECBDAB600946B05"
+            BlueprintIdentifier = "4BBEFAFB1ECC825500878DBC"
             BuildableName = "OpenGLES_Globe.app"
             BlueprintName = "OpenGLES_Globe"
             ReferencedContainer = "container:OpenGLES_Globe.xcodeproj">

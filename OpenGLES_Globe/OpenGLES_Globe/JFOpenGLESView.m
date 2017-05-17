@@ -9,15 +9,12 @@
 #import "JFOpenGLESView.h"
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
-#import <OpenGLES/ES1/gl.h>
 
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
-#import <math.h>
-
 
 #define  PI (3.141592653)
-#define Angler_to_Radian(angle) (angle * PI / 180.0)
+#define Angle_To_Radian(angle) (angle * PI / 180.0)
 
 
 @interface JFOpenGLESView(){
@@ -352,7 +349,7 @@
 -(void)draw{
     //清屏
     glClearColor(1.0, 1.0, 1.0, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
     //设置绘制区域
     glViewport(self.frame.size.width/2-100,self.frame.size.height/2-100,200,200);
@@ -375,7 +372,7 @@
 -(void)renderSphereVertice1
 {
     NSMutableArray *array =[NSMutableArray array];
-    
+
     float r1,r2;
     float h1,h2;
     float sin,cos;
@@ -402,19 +399,81 @@
             [array addObject:@(r1*sin)];
         }
     }
+    
+//    static int angleSpan = 5;
+//    float mRadius =1.0;
+//    static float UNIT_SIZE = 1.0f;
+//    static float DEFAULT_RADIUS = 0.5f;
+//    
+//    for (int vAngle = -90; vAngle < 90; vAngle = vAngle + angleSpan) {
+//        for (int hAngle = 0; hAngle <= 360; hAngle = hAngle + angleSpan) {
+//            float x0 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle)) * cos(Angle_To_Radian(hAngle)));
+//            float y0 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle)) * sin(Angle_To_Radian(hAngle)));
+//            float z0 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle)));
+//            
+//            float x1 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle)) * cos(Angle_To_Radian(hAngle + angleSpan)));
+//            float y1 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle)) * sin(Angle_To_Radian(hAngle + angleSpan)));
+//            float z1 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle)));
+//            
+//            float x2 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle + angleSpan)) * 
+//                                cos(Angle_To_Radian(hAngle + angleSpan)));
+//            float y2 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle + angleSpan)) * 
+//                                sin(Angle_To_Radian(hAngle + angleSpan)));
+//            float z2 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle + angleSpan)));
+//            
+//            float x3 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle + angleSpan)) * 
+//                                cos(Angle_To_Radian(hAngle)));
+//            float y3 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle + angleSpan)) * 
+//                                sin(Angle_To_Radian(hAngle)));
+//            float z3 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle + angleSpan)));
+//            
+//            // 将计算出来的XYZ坐标加入存放顶点坐标的ArrayList
+//            [array addObject:@(x0)];
+//            [array addObject:@(y0)];
+//            [array addObject:@(z0)];
+//            
+//            [array addObject:@(x3)];
+//            [array addObject:@(y3)];
+//            [array addObject:@(z3)];
+//            
+//            [array addObject:@(x1)];
+//            [array addObject:@(y1)];
+//            [array addObject:@(z1)];
+//            
+//            
+//            [array addObject:@(x1)];
+//            [array addObject:@(y1)];
+//            [array addObject:@(z1)];
+//            
+//            [array addObject:@(x3)];
+//            [array addObject:@(y3)];
+//            [array addObject:@(z3)];
+//            
+//            [array addObject:@(x2)];
+//            [array addObject:@(y2)];
+//            [array addObject:@(z2)];
+//        }
+//    }
+    
+    
     int size =(int)array.count;
     GLfloat vertices[size];
     for(int i=0;i<size;i++){
         vertices[i]=[array[i] floatValue];
     }
     
+    GLKMatrix4Rotate(<#GLKMatrix4 matrix#>, <#float radians#>, <#float x#>, <#float y#>, <#float z#>)
     glEnableVertexAttribArray(_glPosition);
-    glVertexAttribPointer(_glPosition, 3, GL_FLOAT, GL_FALSE, 0, vertices);
-    
-//    glEnableVertexAttribArray(glGetAttribLocation(_glProgram, "color"));
-//    glVertexAttribPointer(glGetAttribLocation(_glProgram, "color"), 3, GL_FLOAT, GL_FALSE, sizeof(GLfloat), vertices+sizeof(GLfloat)*6);
-    //triangle->3  rectangle->4  pentagon->5
-    glDrawArrays(GL_TRIANGLE_FAN,0,(GLsizei)size/3);
+    glVertexAttribPointer(_glPosition, 3, GL_FLOAT, GL_FALSE,0, vertices);
+    glDrawArrays(GL_TRIANGLE_STRIP,0,size/3);
 }
 
 
@@ -427,10 +486,10 @@
     float R = 2;
     for (int rowAngle = -90; rowAngle <= 90; rowAngle += angleSpan) {
         for (int colAngleAngle = 0; colAngleAngle < 360; colAngleAngle += angleSpan) {
-            double xozLength = R * cos(Angler_to_Radian(rowAngle));
-            float x = (xozLength * cos(Angler_to_Radian(colAngleAngle)));
-            float z = (xozLength * sin(Angler_to_Radian(colAngleAngle)));
-            float y = (R * sin(Angler_to_Radian(rowAngle)));
+            double xozLength = R * cos(Angle_To_Radian(rowAngle));
+            float x = (xozLength * cos(Angle_To_Radian(colAngleAngle)));
+            float z = (xozLength * sin(Angle_To_Radian(colAngleAngle)));
+            float y = (R * sin(Angle_To_Radian(rowAngle)));
             [verticeArray addObject:@(x)];
             [verticeArray addObject:@(y)];
             [verticeArray addObject:@(z)];
@@ -620,21 +679,21 @@
 
 -(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-//    UITouch * touch = [touches anyObject];
-//    CGPoint location = [touch locationInView:self];
-//    CGPoint lastLoc = [touch previousLocationInView:self];
-//    CGPoint diff = CGPointMake(lastLoc.x - location.x, lastLoc.y - location.y);
-//    
-//    float rotX = -1 * GLKMathDegreesToRadians(diff.y / 2.0);
-//    float rotY = -1 * GLKMathDegreesToRadians(diff.x / 2.0);
-//    
-//    GLKMatrix4 _rotMatrix;
-//    GLKVector3 xAxis = GLKVector3Make(1, 0, 0);
-//    _rotMatrix = GLKMatrix4Rotate(_rotMatrix, rotX, xAxis.x, xAxis.y, xAxis.z);
-//    GLKVector3 yAxis = GLKVector3Make(0, 1, 0);
-//    _rotMatrix = GLKMatrix4Rotate(_rotMatrix, rotY, yAxis.x, yAxis.y, yAxis.z);
+    UITouch * touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self];
+    CGPoint lastLoc = [touch previousLocationInView:self];
+    CGPoint diff = CGPointMake(lastLoc.x - location.x, lastLoc.y - location.y);
+    
 
-    glRotatef(45.0, 1.0, 1.0, 1.0);
+    float rotX = -1 * GLKMathDegreesToRadians(diff.y / 2.0);
+    float rotY = -1 * GLKMathDegreesToRadians(diff.x / 2.0);
+    
+    GLKMatrix4 _rotMatrix = GLKMatrix4MakeOrtho(-2, 2, -3, 3, -1, 1);
+    GLKVector3 xAxis = GLKVector3Make(1, 0, 0);
+    _rotMatrix = GLKMatrix4Rotate(_rotMatrix, rotX, xAxis.x, xAxis.y, xAxis.z);
+    GLKVector3 yAxis = GLKVector3Make(0, 1, 0);
+    _rotMatrix = GLKMatrix4Rotate(_rotMatrix, rotY, yAxis.x, yAxis.y, yAxis.z);
+
     
 }
 
