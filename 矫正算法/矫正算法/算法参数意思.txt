@@ -1,0 +1,11 @@
+int fisheye_display(int type,IplImage* pSrc, IplImage* pDst, int dx, int dy)
+
+这几个参数的都代表什么意思啊
+S02660(陈圳) 15:41:24
+不在办公室
+S02660(陈圳) 16:14:23
+算法选择
+源rgb图
+目标rgb图
+水平旋转角度
+垂直旋转角度

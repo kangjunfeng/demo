@@ -1,0 +1,211 @@
+
+<!-- saved from url=(0047)http://www.uwgb.edu/dutchs/structge/sphproj.htm -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<title>Spherical Projections</title>
+<link rel="stylesheet" type="text/css" href="./Spherical Projections_files/Main0.css">
+</head>
+<body><div align="center">
+<h1>Spherical Projections</h1>
+Steven Dutch, Natural and Applied Sciences,
+<a href="http://weba.uwgb.edu/">University of Wisconsin - Green Bay</a><br>
+First-time Visitors: Please visit <a href="http://www.uwgb.edu/dutchs/sitemap.htm">Site Map and Disclaimer</a>. Use "Back" to return here.
+<hr>
+<p><b>Note:</b> Some texts regard the projection plane for some spherical projections as passing through the center of the sphere rather than tangent to it as this page does. Formulas for projection coordinates differ by a factor of 2 between the two approaches. If your results differ from those here by a factor of 2, this is probably why.</p>
+
+<h2>Great and Small Circles</h2>
+<table border="1">
+<tbody><tr><td><img src="./Spherical Projections_files/smgtcirc.gif" width="200" height="200">
+</td><td>
+In any discussion of spherical projections, it is essential to understand these terms:<br>
+<b>Great Circles</b> have a radius of 90 degrees measured along the circumference of the sphere. The equator of the Earth and meridians of longitude are great circles. A plane passing through the center of the sphere cuts the sphere in a great circle. A great circle on the diagram is shown in blue.<br>
+<b>Small Circles</b> have a radius not equal to 90 degrees. Parallels of latitude are small circles. A plane not passing through the center of the sphere cuts the sphere in a small circle. A small circle on the diagram is shown in yellow (green where it overlaps the great circle).
+</td></tr>
+</tbody></table>
+<h3>Additional points:</h3>
+<ul>
+<li>A circle of radius r degrees also has a radius of 180-r degrees.
+</li><li>Great circles divide the sphere into equal halves.
+</li><li>The principal importance of great circles in geological applications of spherical projections is that they can represent <i>planes</i>.
+</li><li>The center of a great circle is called its <i>pole</i>. If you know a great circle, you can find its pole, and if you know the pole, you can find the great circle. Thus <i>it is possible to represent a plane by a single point</i>. This fact is extensively used in advanced projection techniques.
+</li></ul>
+
+<h2>The Main Types of Spherical Projections</h2>
+<p>Although every map projection projects a sphere onto a plane, in geology (mostly in mineralogy and structural geology) we make use of four main projections as shown below. All of them are <i>azimuthal</i>; that is, we project a sphere onto a plane tangent to the sphere. Directions on the projection are the same as directions on the sphere relative to the point of tangency. Also distances on the projection do not depend on direction; circles on the sphere centered on the point of tangency project as circles on the plane.
+</p><br>
+<img src="./Spherical Projections_files/nettype.gif" width="576" height="332"><br>
+<table border="1">
+<tbody><tr><th>Projection</th><th>How Projected </th><th>Advantages</th><th>Drawbacks</th><th>Uses</th></tr>
+<tr><th>Orthographic</th><td>From sphere perpendicular to plane</td>
+<td>True visual view; all circles plot as ellipses or straight lines.</td>
+<td>Great distortion near edges</td><td>Mostly in structural geology for drawing block diagrams</td></tr>
+
+<tr><th>Gnomonic</th><td>From center of sphere</td><td>Great circles always plot as straight lines</td><td>Extreme radial distortion, cannot plot even one hemisphere</td><td>Mineralogy</td></tr>
+
+<tr><th>Stereographic</th><td>From point opposite point of tangency</td><td>All circles on sphere plot as circles on plane</td><td>Radial distortion</td><td>Most widely used projection in mineralogy and structural geology</td></tr>
+
+<tr><th>Equal Area</th>
+<td>Draw arc from point on sphere to plane</td>
+<td>Area conserved, moderate distortion</td><td>Curves are complex</td><td>Structural geology, for statistical analysis of spatial data</td></tr>
+
+</tbody></table>
+<h3>Some Definitions and Terms</h3>
+<dl>
+<dt><b>Point of Tangency</b>
+</dt><dd>The point of contact between the projection plane and the sphere. It is the center of the projection.
+</dd><dt><b>Near Hemisphere</b>
+</dt><dd>The hemisphere closest to the projection plane (within 90 degrees of the point of tangency).
+</dd><dt><b>Far Hemisphere</b>
+</dt><dd>The hemisphere opposite the projection plane (more than 90 degrees from  the point of tangency).
+</dd><dt><b>Primitive Circle</b>
+</dt><dd>The projected location of the great circle separating the near and far hemispheres (90 degrees from  the point of tangency). 
+</dd><dt><b>Directions and Locations</b>
+</dt><dd>Since the most commonly used projections show the projection sphere on its side like a globe, it makes sense to refer to the projection in geographic terms:
+<ul>
+<li>The central meridian of the projection is the <b>Prime Meridian</b>.
+</li><li>The great circle midway between the poles is the <b>Equator</b>.
+</li><li>North-South means along the prime meridian, East-West means along the equator.
+</li></ul>
+</dd></dl>
+
+<h3>Orthographic Projection</h3>
+<table border="1">
+<tbody><tr><td>
+<img src="./Spherical Projections_files/onet300.gif" width="337" height="326">
+</td><td>
+<p>Provides a true visual view of the near hemisphere but the far hemisphere is not visible. Foreshortening near the primitive circle is extreme. Great and small circles plot as ellipses or straight lines. No important properties conserved. </p>
+<p> Once this projection saw occasional use in converting angles when drawing block diagrams, but calculators and drafting software have largely superseded this use. </p>
+</td></tr>
+</tbody></table>
+
+<h3>Gnomonic Projection</h3>
+<table border="1">
+<tbody><tr><td>
+<img src="./Spherical Projections_files/gnomo2.gif" width="467" height="377">
+</td><td>
+<p>All great circles plot as straight lines, a useful property for some aspects of crystallography. Small circles plot as other conic sections. Less than one hemisphere can be projected and radial distortion is extreme. The primitive circle plots at infinity. No important properties conserved.&nbsp;</p>
+	<p>Useful in mineralogy because certain types of plot cause families of 
+	crystal faces to lie on straight lines</p>
+</td></tr>
+</tbody></table>
+
+<h3>Stereographic Projection</h3>
+<p>All circles on the sphere plot as circles on the plane, making it easy to construct the projection. The projection is <i>conformal</i>, meaning that angles and small shapes on the sphere project true on the plane. Since no spherical projection allows both area and shape to be conserved, something has to give. The price we pay for conformality is areal distortion. Small regions on the sphere project true on the plane, making the stereographic a good map projection for small areas, but radial distortion increases away from the tangency point.</p>
+
+<br><img src="./Spherical Projections_files/snet2.gif" width="589" height="450"><br>
+
+<p>In principle, the entire sphere can be projected except for the projection point. In reality the areal distortion in the far hemisphere (in red) is too severe for most practical purposes (although extended stereonets have been constructed and used.) In most geological applications we use only the near hemisphere (where areal distortion is not too severe) and deal with points in the far hemisphere in one of two ways:
+</p><ul>
+
+<li>We project the point through the center of the sphere and plot it, using some symbol or label to denote that the point is on the other side of the sphere. This is the more common approach in structural geology.
+</li><li>We project the point orthographically toward the plane onto the other side of the sphere and plot it, again using some symbol or label to denote that the point is on the other side of the sphere. This is the more common approach in mineralogy.
+</li><li></li>
+Both of these methods are easy to apply in practice.
+</ul>
+<p>By the way, the stereographic is by no means the only conformal projection. The familiar wall map, the Mercator Projection, is also conformal, and there are conic and special 
+purpose conformal projections as well. The strict definition of a conformal 
+projection is that angles are conserved.</p>
+<h3>Equal-Area Projection</h3>
+<table border="1">
+<tbody><tr><td>
+
+<img src="./Spherical Projections_files/eqarea2.gif" width="378" height="367">
+</td><td>
+<p>As the name implies, this projection conserves area. Shapes are not preserved but shape distortion is not too bad in the near hemisphere. In principle the entire sphere can be plotted but in practice shape distortion beyond 90 degrees (shown in red) becomes severe and beyond about 130 degrees is so extreme as to be unusable. Meridians and parallels are complex curves. Because area is conserved, this is the projection of choice for statistical comparison of spatial data.</p>
+</td></tr>
+</tbody></table>
+
+
+<h2>Coordinate Data for Projections</h2>
+<p>We will use the following assumptions and notations.
+</p><ul>
+<li>We are looking along the z axis, and the projection is oriented with north up along the +y axis and east along the +x axis. 
+</li><li>We represent coordinates in terms of latitude (l) and longitude (w), with the projection centered on latitude 0, longitude 0.
+</li><li>Let x, y, and z be the coordinates of points on the sphere and X and Y the coordinates of the same point on the projection plane.
+  (We don't need Z) 
+</li><li>The origin is at the center of the sphere and the radius of the sphere is 1. Thus the north pole is at (0,1,0) and the south pole is at (0, -1, 0). The point of tangency is at (0,0,1).
+  The projection plane is z = 1.
+</li></ul>
+
+<p>The coordinates of a point at (l, w) are:
+</p><ul>
+<li>x = cos l sin w
+</li><li>y = sin l
+</li><li>z = cos l cos w
+</li></ul>
+<p>
+Because the sphere is a unit sphere, x<sup>2</sup> + y<sup>2</sup> + z<sup>2</sup> = 1. It is also useful to note that x<sup>2</sup> + y<sup>2</sup> = 1 - z<sup>2</sup>. The table below lists X and Y in terms of x, y, and z. Also listed is R, the radial distance of the projected point from the center of the projection.
+</p>
+<p>Because all the projections are azimuthal, the azimuth of the projected point from (X = 0, Y = 0) is always the same as the azimuth on the sphere from (l = 0, w = 0). The azimuth is most simply represented as arctan (y/x), but x/y is infinite if x = 0 and arctan A = arctan(180 + A). We can remove the ambiguity by noting that tan A/2 = sin A/(1 + cos A). Define r = sqrt(x<sup>2</sup> + y<sup>2</sup>), the radial distance of the point on the sphere from the z axis. Then sin A = y/r and cos A = x/r, thus tan A/2 = (y/r)/(1+x/r), or tan A/2 = y/(r+x). Hence&nbsp;</p>
+
+<p align="center"> <b>A = 2arctan(y/(r+x))</b>.&nbsp;</p>
+
+<p> The only problem is that if x = -1 the formula goes to infinity, but if x =
+-1 then A = 180.</p>
+
+<table border="1">
+<caption><b>Coordinate Data for Spherical Projections In Terms of the Projected Sphere</b></caption>
+<tbody><tr><th>Projection</th><th>R (Sphere = 1)</th><th>X</th><th>Y</th></tr>
+
+<tr><th>Orthographic</th><td>sqrt(x<sup>2</sup> + y<sup>2</sup>) = sqrt(1 - z<sup>2</sup>)</td><td>x</td><td>y</td></tr>
+
+<tr><th>Gnomonic</th>
+<td>sqrt(x<sup>2</sup> + y<sup>2</sup>)/z = sqrt(1 - z<sup>2</sup>)/z</td><td>x/z</td><td>y/z</td></tr>
+
+<tr><th>Equal-Area</th><td>sqrt(x<sup>2</sup> + y<sup>2</sup> + (1 - z)<sup>2</sup>) = <br>
+sqrt(2(1 - z))</td><td>R cos A = Rx/r <br> = x sqrt (2/(1 + z))</td>
+<td>R cos A = Ry/r<br> = y sqrt (2/(1 + z))</td></tr>
+
+<tr><th>Stereographic</th>
+<td>2sqrt(x<sup>2</sup> + y<sup>2</sup>)/(1 + z) = <br>2sqrt((1 - z)/(1 + z))</td>
+<td>2x/(1+z)</td><td>2y/(1+z)</td></tr>
+</tbody></table>
+
+<p>For actual plotting of the projection, the following data might be more useful:
+</p><ul>
+<li><b>Orthographic Projection</b>: diameter of primitive circle equals that of the projected sphere
+</li><li><b>Gnomonic Projection</b>: diameter of primitive circle is infinity.
+</li><li><b>Equal-Area Projection</b>: diameter of primitive circle equals  that of the projected sphere times the square root of two.
+</li><li><b>Stereographic Projection</b>: diameter of primitive circle equals twice that of the projected sphere.
+Thus we have:
+</li></ul>
+
+<table border="1">
+<caption><b>Coordinate Data for Spherical Projections In Terms of the Primitive Circle</b></caption>
+<tbody><tr><th>Projection</th><th>R (Primitive Circle = 1)</th><th>X</th><th>Y</th></tr>
+
+<tr><th>Orthographic</th><td>sqrt(x<sup>2</sup> + y<sup>2</sup>) = sqrt(1 - z<sup>2</sup>)</td><td>x</td><td>y</td></tr>
+
+<tr><th>Equal-Area</th><td>sqrt((x<sup>2</sup> + y<sup>2</sup> + (1 - z)<sup>2</sup>)/2) = <br>
+sqrt(1 - z)</td><td>R cos A = Rx/r <br> = x sqrt (1/(1 + z))</td>
+<td>R cos A = Ry/r<br> = y sqrt (1/(1 + z))</td></tr>
+
+<tr><th>Stereographic</th>
+<td>sqrt(x<sup>2</sup> + y<sup>2</sup>)/(1 + z) = <br>sqrt((1 - z)/(1 + z))</td>
+<td>x/(1+z)</td><td>y/(1+z)</td></tr>
+</tbody></table>
+
+<h2>Plotting Nets on a Computer</h2>
+<p>If you don't have software for drawing a net directly, you can still construct one using common software as follows. You will need a spreadsheet with graphing capability and a drawing program that allows you to scale, copy and flip drawings.</p>
+<ul>
+<li>In the spreadsheet, create a table of latitude and longitude. For latitude 90 you only need one longitude (say 0). For latitudes 0-80 degrees, tabulate longitudes from 0 to 90 degrees. We will use this method to construct only one quadrant of the net. Plotting at intervals less than 5  degrees is not recommended. If you plot at 10 degree intervals you will have 91 entries 0,0 - 0, 10, - ... 90,0. If you plot at 5 degrees you will have 421 entries.
+
+</li><li>Create columns for x,y,z, X and Y. Enter the appropriate formulas and copy them down the columns.
+
+</li><li>Define a graph area, select an X-Y point plot, and graph X and Y. The result should look recognizably like the desired net. If it doesn't, check your formulas, graph setup, data fields, and so on. Scale the graph so it is as correct in size and proportions as possible.
+
+</li><li>Export the graph as a graphics file. Most spreadsheets will allow you to block in the graph or the cells around it and use Control-C or Copy to copy it. Others have menu options for exporting graphs.
+
+</li><li>If you expect to do this again, save the spreadsheet.
+
+</li><li>Go to the drawing program and import the graph. Scale the drawing to the correct proportions and construct the great and small circles. When the quadrant is complete and correct, copy it and flip it as needed to generate the other quadrants.</li></ul>
+<p>This method works with <i>Excel</i> and <i>Windows Paint</i>; that's how the nets on this page were created.
+</p>
+
+<hr>
+<p><a href="http://www.uwgb.edu/dutchs/crustmvt.htm">Access Crustal Movements Notes Index</a><br>
+<a href="http://www.uwgb.edu/dutchs/structge/labman.htm">Return to Techniques Manual Index</a><br>
+<a href="http://www.uwgb.edu/dutchs/index.htm">Return to Professor Dutch's Home Page</a><br>
+<i>Created 28 December 1998, Last Update 16 March 1999</i><br>
+Not an official UW Green Bay site</p>
+</div>
+<object id="yhaitaoplugin" type="application/x-npHaitaoPlugin" style="position:absolute;left:-9000px;top:-9000px;" width="0" height="0"></object></body></html>
