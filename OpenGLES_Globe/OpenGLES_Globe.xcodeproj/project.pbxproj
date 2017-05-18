@@ -21,6 +21,10 @@
 		4BBEFB381ECC82A100878DBC /* Fragment.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEFB331ECC82A100878DBC /* Fragment.glsl */; };
 		4BBEFB391ECC82A100878DBC /* JFOpenGLESView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEFB351ECC82A100878DBC /* JFOpenGLESView.m */; };
 		4BBEFB3A1ECC82A100878DBC /* Vertex.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEFB361ECC82A100878DBC /* Vertex.glsl */; };
+		4BE19ED21ECDDB3D00AA4BD5 /* gmMatrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BE19ECE1ECDDB3D00AA4BD5 /* gmMatrix.c */; };
+		4BE19ED31ECDDB3D00AA4BD5 /* gmVector.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BE19ED01ECDDB3D00AA4BD5 /* gmVector.c */; };
+		4BF852B01ECDEB8E0004588A /* Sphere.c in Sources */ = {isa = PBXBuildFile; fileRef = 4BF852AE1ECDEB8E0004588A /* Sphere.c */; };
+		4BF852B21ECDF5FA0004588A /* balitieta.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4BF852B11ECDF5FA0004588A /* balitieta.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +68,13 @@
 		4BBEFB341ECC82A100878DBC /* JFOpenGLESView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFOpenGLESView.h; sourceTree = "<group>"; };
 		4BBEFB351ECC82A100878DBC /* JFOpenGLESView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFOpenGLESView.m; sourceTree = "<group>"; };
 		4BBEFB361ECC82A100878DBC /* Vertex.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vertex.glsl; sourceTree = "<group>"; };
+		4BE19ECE1ECDDB3D00AA4BD5 /* gmMatrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gmMatrix.c; sourceTree = "<group>"; };
+		4BE19ECF1ECDDB3D00AA4BD5 /* gmMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gmMatrix.h; sourceTree = "<group>"; };
+		4BE19ED01ECDDB3D00AA4BD5 /* gmVector.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gmVector.c; sourceTree = "<group>"; };
+		4BE19ED11ECDDB3D00AA4BD5 /* gmVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gmVector.h; sourceTree = "<group>"; };
+		4BF852AE1ECDEB8E0004588A /* Sphere.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Sphere.c; sourceTree = "<group>"; };
+		4BF852AF1ECDEB8E0004588A /* Sphere.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Sphere.h; sourceTree = "<group>"; };
+		4BF852B11ECDF5FA0004588A /* balitieta.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = balitieta.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,9 +180,16 @@
 		4BBEFB3B1ECC82A400878DBC /* OpenGLES */ = {
 			isa = PBXGroup;
 			children = (
+				4BF852B11ECDF5FA0004588A /* balitieta.jpg */,
 				4BBEFB321ECC82A100878DBC /* 3D.png */,
 				4BBEFB341ECC82A100878DBC /* JFOpenGLESView.h */,
 				4BBEFB351ECC82A100878DBC /* JFOpenGLESView.m */,
+				4BF852AE1ECDEB8E0004588A /* Sphere.c */,
+				4BF852AF1ECDEB8E0004588A /* Sphere.h */,
+				4BE19ECE1ECDDB3D00AA4BD5 /* gmMatrix.c */,
+				4BE19ECF1ECDDB3D00AA4BD5 /* gmMatrix.h */,
+				4BE19ED01ECDDB3D00AA4BD5 /* gmVector.c */,
+				4BE19ED11ECDDB3D00AA4BD5 /* gmVector.h */,
 				4BBEFB3C1ECC82B200878DBC /* shader */,
 			);
 			name = OpenGLES;
@@ -296,6 +314,7 @@
 				4BBEFB371ECC82A100878DBC /* 3D.png in Resources */,
 				4BBEFB0F1ECC825500878DBC /* LaunchScreen.storyboard in Resources */,
 				4BBEFB0C1ECC825500878DBC /* Assets.xcassets in Resources */,
+				4BF852B21ECDF5FA0004588A /* balitieta.jpg in Resources */,
 				4BBEFB0A1ECC825500878DBC /* Main.storyboard in Resources */,
 				4BBEFB381ECC82A100878DBC /* Fragment.glsl in Resources */,
 				4BBEFB3A1ECC82A100878DBC /* Vertex.glsl in Resources */,
@@ -323,9 +342,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BE19ED31ECDDB3D00AA4BD5 /* gmVector.c in Sources */,
+				4BF852B01ECDEB8E0004588A /* Sphere.c in Sources */,
 				4BBEFB071ECC825500878DBC /* ViewController.m in Sources */,
 				4BBEFB041ECC825500878DBC /* AppDelegate.m in Sources */,
 				4BBEFB011ECC825500878DBC /* main.m in Sources */,
+				4BE19ED21ECDDB3D00AA4BD5 /* gmMatrix.c in Sources */,
 				4BBEFB391ECC82A100878DBC /* JFOpenGLESView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

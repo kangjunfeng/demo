@@ -6,7 +6,7 @@ varying vec4 vPosition;
 
 void main(void)
 {
-    float uR = 0.6;
+    float uR = 0.5;
     vec4 color =vec4(1.0,1.0,1.0,1.0);
     float n = 8.0;
     float span = 2.0*uR/n;
@@ -22,7 +22,7 @@ void main(void)
     }
     
     vec4 mask = texture2D(Texture, TextureCoordsFrag);
-    gl_FragColor = color;
+    gl_FragColor = vec4(mask.rgb,1.0);
 }
 
 

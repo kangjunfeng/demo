@@ -3,9 +3,13 @@ attribute vec2 TextureCoords;
 varying   vec2 TextureCoordsFrag;
 
 varying vec4 vPosition;
+uniform mat4 Matrix;
+
+
+
 void main(void)
 {
-    gl_Position = Position;
+    gl_Position = Matrix * Position;
     TextureCoordsFrag = TextureCoords;
-    vPosition = Position;
+    vPosition = Position * Matrix;
 }
