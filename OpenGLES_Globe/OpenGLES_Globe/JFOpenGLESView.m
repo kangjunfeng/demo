@@ -16,9 +16,14 @@
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
 #import "gmMatrix.h"
+<<<<<<< HEAD
 #import "Sphere.h"
 
 #define PI 3.141592653f
+=======
+
+#define  PI 3.141592653f
+>>>>>>> origin/master
 #define Angle_To_Radian(angle) (angle * PI / 180.0)
 
 
@@ -40,6 +45,7 @@
     GLint _viewWidth;
     GLint _viewHeight;
     
+<<<<<<< HEAD
     GLfloat   *_vertexData; // 顶点数据
     GLfloat   *_texCoords;  // 纹理坐标
     GLushort  *_indices;    // 顶点索引
@@ -49,6 +55,8 @@
     
     GLuint _vertexBuffer;
     GLuint _indexBuffer;
+=======
+>>>>>>> origin/master
 }
 
 @end
@@ -368,10 +376,13 @@
 -(void)initParm
 {
     InitgmMatrix4(&_mMatrix4);
+<<<<<<< HEAD
     
     //坐标、纹理、索引
     _numIndices = createSphere(200, 1.0, &(_vertexData), &(_texCoords), &_indices, &_numVetex);
     
+=======
+>>>>>>> origin/master
     //参数
     _glPosition = glGetAttribLocation(_glProgram,"Position");
     _texture    = glGetUniformLocation(_glProgram, "Texture");//frag
@@ -403,7 +414,11 @@
     
     //render
 //    [self renderVertices];
+<<<<<<< HEAD
     [self renderSphereVertice3];
+=======
+    [self renderSphereVertice2];
+>>>>>>> origin/master
     
     // 使用完之后解绑GL_TEXTURE_2D
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -541,6 +556,7 @@
     
     glUniformMatrix4fv(_uMatrix, 1, 0, (float*)&_mMatrix4);
     glEnableVertexAttribArray(_glPosition);
+<<<<<<< HEAD
     glVertexAttribPointer(_glPosition, 3, GL_FLOAT, GL_FALSE,0, vertices);
     glDrawArrays(GL_TRIANGLES,0,vCount/3);
 
@@ -572,6 +588,11 @@
     
     glUniformMatrix4fv(_uMatrix, 1, 0, (float*)&_mMatrix4);
     glDrawElements(GL_TRIANGLES, (GLsizei)_numIndices,GL_UNSIGNED_SHORT, nil);
+=======
+    glVertexAttribPointer(_glPosition, 3, GL_FLOAT, GL_FALSE,3*4, vertices);
+    glDrawArrays(GL_TRIANGLES,0,vCount/3);
+
+>>>>>>> origin/master
 
     glDeleteBuffers(1, &_vertexBuffer);
     glDeleteBuffers(1, &_indexBuffer);
