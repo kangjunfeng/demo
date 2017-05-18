@@ -21,6 +21,8 @@
 		4BBEFB381ECC82A100878DBC /* Fragment.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEFB331ECC82A100878DBC /* Fragment.glsl */; };
 		4BBEFB391ECC82A100878DBC /* JFOpenGLESView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBEFB351ECC82A100878DBC /* JFOpenGLESView.m */; };
 		4BBEFB3A1ECC82A100878DBC /* Vertex.glsl in Resources */ = {isa = PBXBuildFile; fileRef = 4BBEFB361ECC82A100878DBC /* Vertex.glsl */; };
+		8401156F1ECD305E00A5D6A0 /* gmMatrix.c in Sources */ = {isa = PBXBuildFile; fileRef = 8401156B1ECD305E00A5D6A0 /* gmMatrix.c */; };
+		840115701ECD305E00A5D6A0 /* gmVector.c in Sources */ = {isa = PBXBuildFile; fileRef = 8401156D1ECD305E00A5D6A0 /* gmVector.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +66,10 @@
 		4BBEFB341ECC82A100878DBC /* JFOpenGLESView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JFOpenGLESView.h; sourceTree = "<group>"; };
 		4BBEFB351ECC82A100878DBC /* JFOpenGLESView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JFOpenGLESView.m; sourceTree = "<group>"; };
 		4BBEFB361ECC82A100878DBC /* Vertex.glsl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Vertex.glsl; sourceTree = "<group>"; };
+		8401156B1ECD305E00A5D6A0 /* gmMatrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gmMatrix.c; sourceTree = "<group>"; };
+		8401156C1ECD305E00A5D6A0 /* gmMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gmMatrix.h; sourceTree = "<group>"; };
+		8401156D1ECD305E00A5D6A0 /* gmVector.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = gmVector.c; sourceTree = "<group>"; };
+		8401156E1ECD305E00A5D6A0 /* gmVector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gmVector.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +175,10 @@
 		4BBEFB3B1ECC82A400878DBC /* OpenGLES */ = {
 			isa = PBXGroup;
 			children = (
+				8401156B1ECD305E00A5D6A0 /* gmMatrix.c */,
+				8401156C1ECD305E00A5D6A0 /* gmMatrix.h */,
+				8401156D1ECD305E00A5D6A0 /* gmVector.c */,
+				8401156E1ECD305E00A5D6A0 /* gmVector.h */,
 				4BBEFB321ECC82A100878DBC /* 3D.png */,
 				4BBEFB341ECC82A100878DBC /* JFOpenGLESView.h */,
 				4BBEFB351ECC82A100878DBC /* JFOpenGLESView.m */,
@@ -180,8 +190,8 @@
 		4BBEFB3C1ECC82B200878DBC /* shader */ = {
 			isa = PBXGroup;
 			children = (
-				4BBEFB331ECC82A100878DBC /* Fragment.glsl */,
 				4BBEFB361ECC82A100878DBC /* Vertex.glsl */,
+				4BBEFB331ECC82A100878DBC /* Fragment.glsl */,
 			);
 			name = shader;
 			sourceTree = "<group>";
@@ -323,9 +333,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				840115701ECD305E00A5D6A0 /* gmVector.c in Sources */,
 				4BBEFB071ECC825500878DBC /* ViewController.m in Sources */,
 				4BBEFB041ECC825500878DBC /* AppDelegate.m in Sources */,
 				4BBEFB011ECC825500878DBC /* main.m in Sources */,
+				8401156F1ECD305E00A5D6A0 /* gmMatrix.c in Sources */,
 				4BBEFB391ECC82A100878DBC /* JFOpenGLESView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

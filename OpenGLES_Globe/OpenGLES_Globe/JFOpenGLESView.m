@@ -12,8 +12,9 @@
 
 #import <Foundation/Foundation.h>
 #import <GLKit/GLKit.h>
+#import "gmMatrix.h"
 
-#define  PI (3.141592653)
+#define  PI 3.141592653f
 #define Angle_To_Radian(angle) (angle * PI / 180.0)
 
 
@@ -23,11 +24,18 @@
     GLuint _colorRenderBuffer;
     GLuint _frameBuffer;
     GLuint _glProgram;
+    
     GLuint _glPosition;
-  
     GLuint _texture;
     GLuint _textureCoords;
     GLuint _textureID;
+    GLuint _uMatrix;
+    
+    gmMatrix4 _mMatrix4;
+    
+    GLint _viewWidth;
+    GLint _viewHeight;
+    
 }
 
 @end
@@ -59,9 +67,12 @@
         [self initBuffer];
         [self initProgram];
         [self initImageTexture];
-        [self draw];
+        [self initParm];
         
-        [self initTouch];
+        // Set up Display Link
+        CADisplayLink* displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(CADisplayLinkRender:)];
+        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+
     }
     return self;
 }
@@ -102,6 +113,10 @@
     glGenFramebuffers(1,&_frameBuffer);
     glBindFramebuffer(GL_FRAMEBUFFER,_frameBuffer);
     glFramebufferRenderbuffer(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _frameBuffer);
+    
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &_viewWidth);
+    glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &_viewHeight);
+    
 }
 
 /**
@@ -148,11 +163,6 @@
     
     //绑定着色器参数
     glUseProgram(_glProgram);
-    
-    //参数
-    _glPosition = glGetAttribLocation(_glProgram,"Position");
-    _texture    = glGetUniformLocation(_glProgram, "Texture");//frag
-    _textureCoords = glGetAttribLocation(_glProgram, "TextureCoords");
 }
 
 -(GLuint)compileWithShaderName:(NSString*)name shaderType:(GLenum)shaderType
@@ -342,6 +352,21 @@
 }
 
 
+-(void)initParm
+{
+    InitgmMatrix4(&_mMatrix4);
+    //参数
+    _glPosition = glGetAttribLocation(_glProgram,"Position");
+    _texture    = glGetUniformLocation(_glProgram, "Texture");//frag
+    _textureCoords = glGetAttribLocation(_glProgram, "TextureCoords");
+    _uMatrix    = glGetUniformLocation(_glProgram, "Matrix");
+}
+
+-(void)CADisplayLinkRender:(CADisplayLink *)displayLink
+{
+    [self draw];
+}
+
 
 /**
  * 绘制
@@ -352,8 +377,8 @@
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     
     //设置绘制区域
-    glViewport(self.frame.size.width/2-100,self.frame.size.height/2-100,200,200);
-   
+//    glViewport(self.frame.size.width/2-100,self.frame.size.height/2-100,200,200);
+    glViewport(0,_viewHeight/2-_viewWidth/2, _viewWidth, _viewWidth);
     //激活
     glActiveTexture(GL_TEXTURE5); // 指定纹理单元GL_TEXTURE5
     glBindTexture(GL_TEXTURE_2D, _textureID); // 绑定，即可从_textureID中取出图像数据。
@@ -361,7 +386,7 @@
     
     //render
 //    [self renderVertices];
-    [self renderSphereVertice1];
+    [self renderSphereVertice2];
     
     // 使用完之后解绑GL_TEXTURE_2D
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -377,7 +402,6 @@
     float h1,h2;
     float sin,cos;
     int step =2.0f;
-    float R =20.0;
     for(float i=-90;i<90+step;i+=step)
     {
         r1 = (float)cosf(i * PI / 180.0);
@@ -386,7 +410,7 @@
         h2 = (float)sinf((i + step) * PI / 180.0);
         //固定纬度, 360 度旋转遍历一条纬线
         float step2=step*2;
-        for (float j = 0.0f; j <360.0f+step; j +=step2 )
+        for (float j = 0.0f; j <360.0f+step2;j +=step2 )
         {
             cos = (float) cosf(j * PI / 180.0);
             sin = -(float) sinf(j * PI / 180.0);
@@ -400,203 +424,112 @@
         }
     }
     
-//    static int angleSpan = 5;
-//    float mRadius =1.0;
-//    static float UNIT_SIZE = 1.0f;
-//    static float DEFAULT_RADIUS = 0.5f;
-//    
-//    for (int vAngle = -90; vAngle < 90; vAngle = vAngle + angleSpan) {
-//        for (int hAngle = 0; hAngle <= 360; hAngle = hAngle + angleSpan) {
-//            float x0 = (float) (mRadius * UNIT_SIZE
-//                                * cos(Angle_To_Radian(vAngle)) * cos(Angle_To_Radian(hAngle)));
-//            float y0 = (float) (mRadius * UNIT_SIZE
-//                                * cos(Angle_To_Radian(vAngle)) * sin(Angle_To_Radian(hAngle)));
-//            float z0 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle)));
-//            
-//            float x1 = (float) (mRadius * UNIT_SIZE
-//                                * cos(Angle_To_Radian(vAngle)) * cos(Angle_To_Radian(hAngle + angleSpan)));
-//            float y1 = (float) (mRadius * UNIT_SIZE
-//                                * cos(Angle_To_Radian(vAngle)) * sin(Angle_To_Radian(hAngle + angleSpan)));
-//            float z1 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle)));
-//            
-//            float x2 = (float) (mRadius * UNIT_SIZE
-//                                * cos(Angle_To_Radian(vAngle + angleSpan)) * 
-//                                cos(Angle_To_Radian(hAngle + angleSpan)));
-//            float y2 = (float) (mRadius * UNIT_SIZE
-//                                * cos(Angle_To_Radian(vAngle + angleSpan)) * 
-//                                sin(Angle_To_Radian(hAngle + angleSpan)));
-//            float z2 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle + angleSpan)));
-//            
-//            float x3 = (float) (mRadius * UNIT_SIZE
-//                                * cos(Angle_To_Radian(vAngle + angleSpan)) * 
-//                                cos(Angle_To_Radian(hAngle)));
-//            float y3 = (float) (mRadius * UNIT_SIZE
-//                                * cos(Angle_To_Radian(vAngle + angleSpan)) * 
-//                                sin(Angle_To_Radian(hAngle)));
-//            float z3 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle + angleSpan)));
-//            
-//            // 将计算出来的XYZ坐标加入存放顶点坐标的ArrayList
-//            [array addObject:@(x0)];
-//            [array addObject:@(y0)];
-//            [array addObject:@(z0)];
-//            
-//            [array addObject:@(x3)];
-//            [array addObject:@(y3)];
-//            [array addObject:@(z3)];
-//            
-//            [array addObject:@(x1)];
-//            [array addObject:@(y1)];
-//            [array addObject:@(z1)];
-//            
-//            
-//            [array addObject:@(x1)];
-//            [array addObject:@(y1)];
-//            [array addObject:@(z1)];
-//            
-//            [array addObject:@(x3)];
-//            [array addObject:@(y3)];
-//            [array addObject:@(z3)];
-//            
-//            [array addObject:@(x2)];
-//            [array addObject:@(y2)];
-//            [array addObject:@(z2)];
-//        }
-//    }
-    
-    
     int size =(int)array.count;
     GLfloat vertices[size];
     for(int i=0;i<size;i++){
         vertices[i]=[array[i] floatValue];
     }
-    
-    GLKMatrix4Rotate(<#GLKMatrix4 matrix#>, <#float radians#>, <#float x#>, <#float y#>, <#float z#>)
+
+//    gmMatrix4 model, view, proj;
+//
+//    static float angle = 0.0f;
+//    gmMatrixRotateY(&model, angle);
+//    angle += 0.1f;
+//
+//    gmVector3 eye = {0.0f, 0.0f, -1.0f};
+//    gmVector3 at =  {0.0f, 0.0f, 0.0f};
+//    gmVector3 up =  {0.0f, 0.5f, 0.0f};
+//
+//    gmMatrixPerspectiveFovLH(&proj, 10.0f, (float)_viewWidth / (float)_viewHeight, -5.0f, 1000.0f);
+//    gmMatrixLookAtLH(&view, &eye, &at, &up);
+//
+//    gmMatrixMultiply(&_mMatrix4, &model, &view);
+//    gmMatrixMultiply(&_mMatrix4, &_mMatrix4, &proj);
+   
+    //矩阵传递
+    glUniformMatrix4fv(_uMatrix, 1, 0, (float*)&_mMatrix4);
     glEnableVertexAttribArray(_glPosition);
     glVertexAttribPointer(_glPosition, 3, GL_FLOAT, GL_FALSE,0, vertices);
     glDrawArrays(GL_TRIANGLE_STRIP,0,size/3);
 }
 
-
 -(void)renderSphereVertice2
 {
-    
     NSMutableArray *verticeArray =[NSMutableArray array];
     
-    static int angleSpan = 9;// 将球进行单位切分的角度
-    float R = 2;
-    for (int rowAngle = -90; rowAngle <= 90; rowAngle += angleSpan) {
-        for (int colAngleAngle = 0; colAngleAngle < 360; colAngleAngle += angleSpan) {
-            double xozLength = R * cos(Angle_To_Radian(rowAngle));
-            float x = (xozLength * cos(Angle_To_Radian(colAngleAngle)));
-            float z = (xozLength * sin(Angle_To_Radian(colAngleAngle)));
-            float y = (R * sin(Angle_To_Radian(rowAngle)));
-            [verticeArray addObject:@(x)];
-            [verticeArray addObject:@(y)];
-            [verticeArray addObject:@(z)];
-        }  
-    }
+    static float UNIT_SIZE = 1.0f;// 单位尺寸
+    float r = 0.8f; // 球的半径
+    int angleSpan = 10;// 将球进行单位切分的角度
+    int vCount = 0;// 顶点个数，先初始化为0
     
-    int size =(int)verticeArray.count;
-    GLfloat vertices[size];
-    for(int i=0;i<size;i++){
-        vertices[i]=[verticeArray[i] floatValue];
-    }
-    [verticeArray removeAllObjects];
-    
-/*---------------------------------------------------------------------*/
-    
-    int vCount = size / 3;// 顶点的数量为坐标值数量的1/3，因为一个顶点有3个坐标
-    NSMutableArray *textureArray =[NSMutableArray array];// 纹理
-
-    int row = (180 / angleSpan) + 1;// 球面切分的行数
-    int col = 360 / angleSpan;// 球面切分的列数
-
-    float splitRow = row;
-    float splitCol = col;
-
-    for (int i = 0; i < row; i++)// 对每一行循环
+    for (int vAngle = -90; vAngle < 90; vAngle = vAngle + angleSpan)// 垂直方向angleSpan度一份
     {
-        if (i > 0 && i < row - 1) {// 中间行
-            for (int j = 0; j < col; j++) {// 中间行的两个相邻点与下一行的对应点构成三角形
-                int k = i * col + j;
-                // 第1个三角形顶点
-                [verticeArray addObject:@(vertices[(k + col) * 3])];
-                [verticeArray addObject:@(vertices[(k + col) * 3 + 1])];
-                [verticeArray addObject:@(vertices[(k + col) * 3 + 2])];
+        for (int hAngle = 0; hAngle <= 360; hAngle = hAngle + angleSpan)// 水平方向angleSpan度一份
+        {
+            // 纵向横向各到一个角度后计算对应的此点在球面上的坐标
+            float x0 = (float) (r * UNIT_SIZE* sin(vAngle) * cos(hAngle));
+            float y0 = (float) (r * UNIT_SIZE* sin(vAngle) * sin(hAngle));
+            float z0 = (float) (r * UNIT_SIZE * cos(vAngle));
+            // Log.w("x0 y0 z0","" + x0 + "  "+y0+ "  " +z0);
 
-                // 纹理坐标
-                [textureArray addObject:@(j / splitCol)];
-                [textureArray addObject:@((i + 1) / splitRow)];
+            float x1 = (float) (r * UNIT_SIZE * sin(vAngle) * cos(hAngle + angleSpan));
+            float y1 = (float) (r * UNIT_SIZE * sin(vAngle) * sin(hAngle + angleSpan));
+            float z1 = (float) (r * UNIT_SIZE * cos(vAngle));
+            // Log.w("x1 y1 z1","" + x1 + "  "+y1+ "  " +z1);
 
-                // 第2个三角形顶点
-                int tmp = k + 1;
-                if (j == col - 1) {
-                    tmp = (i) * col;
-                }
-                [verticeArray addObject:@(vertices[(tmp) * 3])];
-                [verticeArray addObject:@(vertices[(tmp) * 3 + 1])];
-                [verticeArray addObject:@(vertices[(tmp) * 3 + 2])];
+            float x2 = (float) (r * UNIT_SIZE * sin(vAngle + angleSpan) * cos(hAngle + angleSpan));
+            float y2 = (float) (r * UNIT_SIZE * sin(vAngle + angleSpan) * sin(hAngle + angleSpan));
+            float z2 = (float) (r * UNIT_SIZE * cos(vAngle + angleSpan));
+            // Log.w("x2 y2 z2","" + x2 + "  "+y2+ "  " +z2);
+            float x3 = (float) (r * UNIT_SIZE * sin(vAngle + angleSpan) * cos(hAngle));
+            float y3 = (float) (r * UNIT_SIZE * sin(vAngle + angleSpan) * sin(hAngle));
+            float z3 = (float) (r * UNIT_SIZE * cos(vAngle + angleSpan));
+            // Log.w("x3 y3 z3","" + x3 + "  "+y3+ "  " +z3);
+//             将计算出来的XYZ坐标加入存放顶点坐标的ArrayList
+            [verticeArray addObject:@(x0)];
+            [verticeArray addObject:@(y0)];
+            [verticeArray addObject:@(z0)];
+            [verticeArray addObject:@(x3)];
+            [verticeArray addObject:@(y3)];
+            [verticeArray addObject:@(z3)];
+            [verticeArray addObject:@(x1)];
+            [verticeArray addObject:@(y1)];
+            [verticeArray addObject:@(z1)];
 
-                // 纹理坐标
-                [textureArray addObject:@((j + 1) / splitCol)];
-                [textureArray addObject:@(i / splitRow)];
-
-                // 第3个三角形顶点
-                [verticeArray addObject:@(vertices[k * 3])];
-                [verticeArray addObject:@(vertices[k * 3 + 1])];
-                [verticeArray addObject:@(vertices[k * 3 + 2])];
-
-                // 纹理坐标
-                [textureArray addObject:@(j / splitCol)];
-                [textureArray addObject:@(i / splitRow)];
-            }
-            for (int j = 0; j < col; j++) {// 中间行的两个相邻点与上一行的对应点构成三角形
-                int k = i * col + j;
-
-                // 第1个三角形顶点
-                [verticeArray addObject:@(vertices[(k - col) * 3])];
-                [verticeArray addObject:@(vertices[(k - col) * 3 + 1])];
-                [verticeArray addObject:@(vertices[(k - col) * 3 + 2])];
-                [textureArray addObject:@(j / 40.0f)];
-                [textureArray addObject:@((i - 1) / splitRow)];
-
-                int tmp = k - 1;
-                if (j == 0) {
-                    tmp = i * col + col - 1;
-                }
-                // 第2个三角形顶点
-                [verticeArray addObject:@(vertices[(tmp) * 3])];
-                [verticeArray addObject:@(vertices[(tmp) * 3 + 1])];
-                [verticeArray addObject:@(vertices[(tmp) * 3 + 2])];
-                [textureArray addObject:@((j - 1) / splitCol)];
-                [textureArray addObject:@(i / splitRow)];
-
-                // 第3个三角形顶点
-                [verticeArray addObject:@(vertices[k * 3])];
-                [verticeArray addObject:@(vertices[k * 3 + 1])];
-                [verticeArray addObject:@(vertices[k * 3 + 2])];
-                [textureArray addObject:@(j/splitCol)];
-                [textureArray addObject:@(i/splitRow)];
-            }  
-        }  
+            [verticeArray addObject:@(x1)];
+            [verticeArray addObject:@(y1)];
+            [verticeArray addObject:@(z1)];
+            [verticeArray addObject:@(x2)];
+            [verticeArray addObject:@(y2)];
+            [verticeArray addObject:@(z2)];
+            [verticeArray addObject:@(x3)];
+            [verticeArray addObject:@(y3)];
+            [verticeArray addObject:@(z3)];
+        }
     }
     
-    int size1 =(int)textureArray.count;
-    GLfloat textures[size1];
-    for(int i=0;i<size1;i++){
-        textures[i]=[textureArray[i] floatValue];
+    vCount = (int)verticeArray.count;
+    // 将alVertix中的坐标值转存到一个float数组中
+    float vertices[vCount];
+    for (int i = 0; i < vCount; i++) {
+        vertices[i] = [verticeArray[i] floatValue];
     }
 
-    glVertexAttribPointer(_textureCoords, 2, GL_FLOAT, GL_FALSE, 0, textures);
-    glEnableVertexAttribArray(_textureCoords);
+//    //投影视角
+//    GLKMatrix4 frustumMatrix =GLKMatrix4MakeFrustum(-1.0,1.0,-1.0,1.0f,-10,10);
+//    frustumMatrix = GLKMatrix4MakeLookAt(0.0f, 0.0f, -20.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f);
+//
+//    float aspect = fabsf(_viewWidth /_viewWidth);
+//    GLKMatrix4 projectionMatrix =GLKMatrix4MakePerspective(GLKMathDegreesToRadians(65.0f),aspect, 0.5f,1.0f);
     
+    glUniformMatrix4fv(_uMatrix, 1, 0, (float*)&_mMatrix4);
     glEnableVertexAttribArray(_glPosition);
-    glVertexAttribPointer(_glPosition, 3, GL_FLOAT, GL_FALSE, 0, vertices);
-    
-    //triangle->3  rectangle->4  pentagon->5
-    glDrawArrays(GL_TRIANGLE_FAN,0,(GLsizei)size/3);
+    glVertexAttribPointer(_glPosition, 3, GL_FLOAT, GL_FALSE,3*4, vertices);
+    glDrawArrays(GL_TRIANGLES,0,vCount/3);
+
 
 }
+
 
 -(void)renderVertices
 {
@@ -672,29 +605,129 @@
     glDrawElements(GL_TRIANGLE_STRIP, sizeof(indices)/sizeof(indices[0]), GL_UNSIGNED_BYTE, 0);
 }
 
--(void)initTouch
-{
-    
-}
+
 
 -(void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
-    UITouch * touch = [touches anyObject];
-    CGPoint location = [touch locationInView:self];
-    CGPoint lastLoc = [touch previousLocationInView:self];
-    CGPoint diff = CGPointMake(lastLoc.x - location.x, lastLoc.y - location.y);
+//    UITouch * touch = [touches anyObject];
+//    CGPoint location = [touch locationInView:self];
+//    CGPoint lastLoc = [touch previousLocationInView:self];
+//    CGPoint diff = CGPointMake(lastLoc.x - location.x, lastLoc.y - location.y);
+//    
+//
+//    float rotX = -1 * GLKMathDegreesAngle_To_Radian(diff.y / 2.0);
+//    float rotY = -1 * GLKMathDegreesAngle_To_Radian(diff.x / 2.0);
+//    
+//    GLKMatrix4 _rotMatrix = GLKMatrix4MakeOrtho(-2, 2, -3, 3, -1, 1);
+//    GLKVector3 xAxis = GLKVector3Make(1, 0, 0);
+//    _rotMatrix = GLKMatrix4Rotate(_rotMatrix, rotX, xAxis.x, xAxis.y, xAxis.z);
+//    GLKVector3 yAxis = GLKVector3Make(0, 1, 0);
+//    _rotMatrix = GLKMatrix4Rotate(_rotMatrix, rotY, yAxis.x, yAxis.y, yAxis.z);
+
+    static float angle = 0.0f;
+    gmMatrixRotateY(&_mMatrix4, angle);
+    angle += 0.1f;
     
 
-    float rotX = -1 * GLKMathDegreesToRadians(diff.y / 2.0);
-    float rotY = -1 * GLKMathDegreesToRadians(diff.x / 2.0);
-    
-    GLKMatrix4 _rotMatrix = GLKMatrix4MakeOrtho(-2, 2, -3, 3, -1, 1);
-    GLKVector3 xAxis = GLKVector3Make(1, 0, 0);
-    _rotMatrix = GLKMatrix4Rotate(_rotMatrix, rotX, xAxis.x, xAxis.y, xAxis.z);
-    GLKVector3 yAxis = GLKVector3Make(0, 1, 0);
-    _rotMatrix = GLKMatrix4Rotate(_rotMatrix, rotY, yAxis.x, yAxis.y, yAxis.z);
-
-    
+    //    gmMatrixScale(&_mMatrix4,0.5f,0.5f,1.0f);
 }
+
+
+
+/*-------------------------  相机视角 -------------------------*/
+//    GLKMatrix4 eyeMatrix= GLKMatrix4MakeLookAt(0.0f, 0.0f, -20.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.5f, 0.0f);
+//    //投影视角
+//    GLKMatrix4 frustumMatrix =GLKMatrix4MakeFrustum(-1.0,1.0,-1.0,1.0f,-10,10);
+//
+//    float aspect = fabsf(_viewWidth /_viewWidth);
+//    GLKMatrix4 projectionMatrix =GLKMatrix4MakePerspective(GLKMathDegreesAngle_To_Radian(65.0f),aspect, 0.5f,1.0f);
+//
+//    float newF[16]={
+//        eyeMatrix.m[0]*frustumMatrix.m[0],
+//        eyeMatrix.m[1]*frustumMatrix.m[1],
+//        eyeMatrix.m[2]*frustumMatrix.m[2],
+//        eyeMatrix.m[3]*frustumMatrix.m[3],
+//        eyeMatrix.m[4]*frustumMatrix.m[4],
+//        eyeMatrix.m[5]*frustumMatrix.m[5],
+//        eyeMatrix.m[6]*frustumMatrix.m[6],
+//        eyeMatrix.m[7]*frustumMatrix.m[7],
+//        eyeMatrix.m[8]*frustumMatrix.m[8],
+//        eyeMatrix.m[9]*frustumMatrix.m[9],
+//        eyeMatrix.m[10]*frustumMatrix.m[10],
+//        eyeMatrix.m[11]*frustumMatrix.m[11],
+//        eyeMatrix.m[12]*frustumMatrix.m[12],
+//        eyeMatrix.m[13]*frustumMatrix.m[13],
+//        eyeMatrix.m[14]*frustumMatrix.m[14],
+//        eyeMatrix.m[15]*frustumMatrix.m[15]
+//    };
+
+
+
+
+
+/*-------------------------- 顶点坐标 ----------------------------*/
+//    static int angleSpan = 5;
+//    float mRadius =1.0;
+//    static float UNIT_SIZE = 1.0f;
+//    static float DEFAULT_RADIUS = 0.5f;
+//
+//    for (int vAngle = -90; vAngle < 90; vAngle = vAngle + angleSpan) {
+//        for (int hAngle = 0; hAngle <= 360; hAngle = hAngle + angleSpan) {
+//            float x0 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle)) * cos(Angle_To_Radian(hAngle)));
+//            float y0 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle)) * sin(Angle_To_Radian(hAngle)));
+//            float z0 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle)));
+//
+//            float x1 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle)) * cos(Angle_To_Radian(hAngle + angleSpan)));
+//            float y1 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle)) * sin(Angle_To_Radian(hAngle + angleSpan)));
+//            float z1 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle)));
+//
+//            float x2 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle + angleSpan)) *
+//                                cos(Angle_To_Radian(hAngle + angleSpan)));
+//            float y2 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle + angleSpan)) *
+//                                sin(Angle_To_Radian(hAngle + angleSpan)));
+//            float z2 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle + angleSpan)));
+//
+//            float x3 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle + angleSpan)) *
+//                                cos(Angle_To_Radian(hAngle)));
+//            float y3 = (float) (mRadius * UNIT_SIZE
+//                                * cos(Angle_To_Radian(vAngle + angleSpan)) *
+//                                sin(Angle_To_Radian(hAngle)));
+//            float z3 = (float) (mRadius * UNIT_SIZE * sin(Angle_To_Radian(vAngle + angleSpan)));
+//
+//            // 将计算出来的XYZ坐标加入存放顶点坐标的ArrayList
+//            [array addObject:@(x0)];
+//            [array addObject:@(y0)];
+//            [array addObject:@(z0)];
+//
+//            [array addObject:@(x3)];
+//            [array addObject:@(y3)];
+//            [array addObject:@(z3)];
+//
+//            [array addObject:@(x1)];
+//            [array addObject:@(y1)];
+//            [array addObject:@(z1)];
+//
+//
+//            [array addObject:@(x1)];
+//            [array addObject:@(y1)];
+//            [array addObject:@(z1)];
+//
+//            [array addObject:@(x3)];
+//            [array addObject:@(y3)];
+//            [array addObject:@(z3)];
+//
+//            [array addObject:@(x2)];
+//            [array addObject:@(y2)];
+//            [array addObject:@(z2)];
+//        }
+//    }
+
 
 @end
